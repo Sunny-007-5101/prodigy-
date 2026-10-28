@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../components/Button';
-import { SectionLabel } from '../components/Bits';
 import { CONTACT, SITE } from '../content';
 import { LineReveal } from '../motion/LineReveal';
 import { Reveal, RevealGroup, RevealItem } from '../motion/Reveal';
@@ -78,11 +77,10 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
     <section id="contact" className="relative py-20 md:py-28" aria-labelledby="contact-title">
       <div className="wrap grid gap-16 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <SectionLabel index={4} text={CONTACT.label} />
           <LineReveal
             id="contact-title"
             lines={[CONTACT.title]}
-            className="mt-8 whitespace-nowrap text-[clamp(44px,5.4vw,80px)] font-normal leading-[1] tracking-[-0.025em]"
+            className="whitespace-nowrap text-[clamp(44px,5.4vw,80px)] font-normal leading-[1] tracking-[-0.025em]"
           />
           <Reveal as="p" delay={0.1} className="mt-8 max-w-sm text-[17px] leading-relaxed text-muted">
             {CONTACT.intro}

@@ -51,10 +51,6 @@ export function Hero() {
       />
 
       <motion.div className="wrap relative mt-auto pb-10 pt-32 md:pb-14" style={reduce ? undefined : { y: textY }}>
-        <motion.p {...fade(0.25)} className="label mb-7 flex items-center gap-3">
-          <span className="text-accent">[</span>Prodigy — Autonomous systems<span className="text-accent">]</span>
-        </motion.p>
-
         <LineReveal
           as="h1"
           immediate

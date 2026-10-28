@@ -1,4 +1,3 @@
-import { SectionLabel } from '../components/Bits';
 import { TEAM } from '../content';
 import { LineReveal } from '../motion/LineReveal';
 import { RevealGroup, RevealItem } from '../motion/Reveal';
@@ -8,11 +7,10 @@ export function Team() {
   return (
     <section id="team" className="relative py-20 md:py-28" aria-labelledby="team-title">
       <div className="wrap">
-        <SectionLabel index={3} text={TEAM.label} />
         <LineReveal
           id="team-title"
           lines={[TEAM.title]}
-          className="mt-8 text-[clamp(32px,4.4vw,64px)] font-normal leading-[1.05] tracking-[-0.02em]"
+          className="text-[clamp(32px,4.4vw,64px)] font-normal leading-[1.05] tracking-[-0.02em]"
         />
 
         <RevealGroup className="mt-14 grid gap-px border-y border-line bg-line md:mt-20 md:grid-cols-2" step={0.12}>

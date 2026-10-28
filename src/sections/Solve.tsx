@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { INSULATOR, TILE_CLOUDS } from '../canvas/clouds';
 import { PointCloud } from '../canvas/PointCloud';
-import { SectionLabel, Ticks } from '../components/Bits';
+import { Ticks } from '../components/Bits';
 import { SOLVE } from '../content';
 import { anchor } from '../lib/scroll';
 import { LineReveal } from '../motion/LineReveal';
@@ -13,11 +13,10 @@ export function Solve() {
   return (
     <section id="solve" className="relative py-20 md:py-28" aria-labelledby="solve-title">
       <div className="wrap">
-        <SectionLabel index={2} text={SOLVE.label} />
         <LineReveal
           id="solve-title"
           lines={splitTitle(SOLVE.title)}
-          className="mt-8 max-w-[22ch] text-[clamp(32px,4.4vw,64px)] font-normal leading-[1.05] tracking-[-0.02em]"
+          className="max-w-[22ch] text-[clamp(32px,4.4vw,64px)] font-normal leading-[1.05] tracking-[-0.02em]"
         />
 
         {/* Tiles: title + a live point-cloud illustration, no explanatory text */}
@@ -25,8 +24,7 @@ export function Solve() {
           {SOLVE.tiles.map((t, i) => (
             <RevealItem key={t} className="group relative flex h-72 flex-col bg-[#0d1a2e] transition-colors duration-500 hover:bg-surface md:h-80">
               <div className="flex items-center justify-between px-5 pt-5">
-                <span className="font-mono text-[11px] tracking-[0.1em] text-muted">{String(i + 1).padStart(2, '0')}</span>
-                <span className="h-1.5 w-1.5 rounded-full bg-line-strong transition-colors duration-500 group-hover:bg-accent" />
+                <span className="text-[14px] font-medium text-muted">{String(i + 1).padStart(2, '0')}</span>
               </div>
               <div className="relative min-h-0 flex-1">
                 <PointCloud config={TILE_CLOUDS[i]} />
@@ -47,9 +45,8 @@ export function Solve() {
           <Ticks />
           <div className="relative z-10 flex flex-col justify-center gap-10 p-6 md:p-10 lg:col-span-5 lg:p-12">
             <div>
-              <Reveal className="inline-flex items-center gap-3">
-                <span className="h-px w-6 bg-accent" />
-                <span className="text-[13px] font-medium uppercase tracking-[0.08em] text-accent">{SOLVE.focus.label}</span>
+              <Reveal className="text-[16px] font-medium uppercase tracking-[0.08em] text-accent">
+                {SOLVE.focus.label}
               </Reveal>
               <LineReveal
                 as="h3"

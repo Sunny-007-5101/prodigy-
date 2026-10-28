@@ -14,7 +14,9 @@ export function WordReveal({ text, highlight, className }: Props) {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.45'] });
 
-  const words = text.split(' ');
+  // '\n' in the text starts a new line
+  const lines = text.split('\n').map((l) => l.trim().split(' '));
+  const words = lines.flat();
   let hlStart = -1;
   let hlEnd = -1;
   if (highlight) {
@@ -30,9 +32,14 @@ export function WordReveal({ text, highlight, className }: Props) {
 
   return (
     <p ref={ref} className={className}>
-      {words.map((w, i) => {
-        const isHl = i >= hlStart && i < hlEnd;
+      {lines.map((lineWords, li) => {
+        const offset = lines.slice(0, li).reduce((a, l) => a + l.length, 0);
         return (
+          <span key={li} className="block">
+            {lineWords.map((w, j) => {
+              const i = offset + j;
+              const isHl = i >= hlStart && i < hlEnd;
+              return (
           <span key={i}>
             {reduce ? (
               <span className={isHl ? 'text-accent' : 'text-ink'}>{w}</span>
@@ -41,6 +48,9 @@ export function WordReveal({ text, highlight, className }: Props) {
                 {w}
               </Word>
             )}{' '}
+          </span>
+              );
+            })}
           </span>
         );
       })}

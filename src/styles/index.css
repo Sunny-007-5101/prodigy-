@@ -75,6 +75,9 @@
 }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
+/* Pulse running along the status trace */
+@keyframes status-run { from { transform: translateX(-100%); } to { transform: translateX(200%); } }
+
 /* Light pulse travelling a button outline */
 @keyframes trace { to { stroke-dashoffset: -400; } }
 

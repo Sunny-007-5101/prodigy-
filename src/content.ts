@@ -28,7 +28,7 @@ export const HERO = {
 export const ABOUT = {
   label: 'Who we are',
   body:
-    'Much of the work on critical infrastructure is still done by crews, helicopters and heavy equipment, at height and near live assets. The robots and drones in use today remain basic tools with limited autonomy. Prodigy is building the next generation: truly autonomous robotic and drone systems that take on the hardest work, safer, faster and at global scale.',
+    'Much of the work on critical infrastructure is still done by crews, helicopters and heavy equipment, at height and near live assets.\nThe robots and drones in use today remain basic tools with limited autonomy.\nProdigy is building the next generation: truly autonomous robotic and drone systems that take on the hardest work, safer, faster and at global scale.',
   // This phrase gets the accent colour once the reveal finishes.
   highlight: 'Prodigy is building the next generation',
 };
