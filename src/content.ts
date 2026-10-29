@@ -54,13 +54,18 @@ export const TEAM = {
     { name: 'Ran Nussbaum', role: 'Co-founder & Chairman · Managing Partner & Co-founder, Pontifax' },
   ],
   note:
-    'Our leadership team and engineers come from leading Israeli robotics and drone startups and from elite IDF technology units.',
+    'Our leadership team and engineers come from Israel’s top robotics and drone startups and elite IDF technology units.',
 };
 
 export const CONTACT = {
   label: 'Contact',
   title: 'Get in touch.',
   intro: 'Interested in what we are building? We would like to hear from you.',
+  emails: [
+    'jonathan.barkat@prodigy-technology.com',
+    'ran.nussbaum@prodigy-technology.com',
+    'ron.itzchaki@prodigy-technology.com',
+  ],
   fields: { name: 'Name', organization: 'Organization', email: 'Email', message: 'Message' },
   consent: 'I agree to the',
   consentLink: 'Privacy Policy',

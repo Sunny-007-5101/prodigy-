@@ -90,6 +90,17 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
               {SITE.email}
             </a>
           </Reveal>
+          <Reveal delay={0.25} className="mt-6 flex flex-col gap-3">
+            {CONTACT.emails.map((e) => (
+              <a
+                key={e}
+                href={`mailto:${e}`}
+                className="w-fit break-all text-[15px] text-ink/80 underline decoration-line-strong underline-offset-[6px] transition-colors hover:text-ink hover:decoration-accent"
+              >
+                {e}
+              </a>
+            ))}
+          </Reveal>
         </div>
 
         <div className="lg:col-span-6 lg:col-start-7">

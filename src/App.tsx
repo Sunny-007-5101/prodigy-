@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { BackgroundCircuit } from './components/BackgroundCircuit';
 import { CircuitDivider } from './components/CircuitDivider';
 import { Header } from './components/Header';
 import { PrivacyModal } from './components/PrivacyModal';
@@ -26,9 +27,10 @@ export default function App() {
       <a href="#about" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
       </a>
+      <BackgroundCircuit />
       <Header active={active} />
       <ScrollRail active={active} />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <About />
         <CircuitDivider variant="a" />
@@ -38,7 +40,9 @@ export default function App() {
         <CircuitDivider variant="a" />
         <Contact onPrivacy={openPrivacy} />
       </main>
-      <Footer onPrivacy={openPrivacy} />
+      <div className="relative z-10">
+        <Footer onPrivacy={openPrivacy} />
+      </div>
       <PrivacyModal open={privacy} onClose={closePrivacy} />
     </>
   );

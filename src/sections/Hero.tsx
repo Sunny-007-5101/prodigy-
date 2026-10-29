@@ -1,6 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { CircuitField } from '../canvas/CircuitField';
 import { Button } from '../components/Button';
 import { StatusTag } from '../components/Bits';
 import { HERO } from '../content';
@@ -26,8 +25,6 @@ export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const bgOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.15]);
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-12%']);
 
   const fade = (delay: number) => ({
@@ -38,15 +35,12 @@ export function Hero() {
 
   return (
     <section ref={ref} id="top" className="relative flex min-h-[100svh] flex-col overflow-hidden" aria-label="Introduction">
-      <motion.div className="absolute inset-0" style={reduce ? undefined : { y: bgY, opacity: bgOpacity }}>
-        <CircuitField />
-      </motion.div>
       {/* keep the headline readable over the circuit */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 70% 60% at 22% 68%, rgba(10,21,38,0.92) 0%, rgba(10,21,38,0.6) 45%, rgba(10,21,38,0) 75%), linear-gradient(to bottom, rgba(10,21,38,0.55) 0%, rgba(10,21,38,0) 18%, rgba(10,21,38,0) 70%, var(--bg) 100%)',
+            'radial-gradient(ellipse 70% 60% at 22% 68%, rgba(10,21,38,0.92) 0%, rgba(10,21,38,0.6) 45%, rgba(10,21,38,0) 75%), linear-gradient(to bottom, rgba(10,21,38,0.55) 0%, rgba(10,21,38,0) 18%)',
         }}
       />
 
