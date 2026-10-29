@@ -50,8 +50,8 @@ export const TEAM = {
   label: 'Team',
   title: 'The team',
   people: [
-    { name: 'Jonathan Barkat', role: 'Co-founder & CEO' },
-    { name: 'Ran Nussbaum', role: 'Co-founder & Chairman · Managing Partner & Co-founder, Pontifax' },
+    { name: 'Jonathan Barkat', role: 'Co-founder & CEO', linkedin: 'https://www.linkedin.com/in/jonathan-barkat-1a4983296' },
+    { name: 'Ran Nussbaum', role: 'Co-founder & Chairman · Managing Partner & Co-founder, Pontifax', linkedin: '' },
   ],
   note:
     'Our leadership team and engineers come from Israel’s top robotics and drone startups and elite IDF technology units.',
