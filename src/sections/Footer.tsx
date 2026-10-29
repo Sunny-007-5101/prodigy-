@@ -14,7 +14,6 @@ export function Footer({ onPrivacy }: { onPrivacy: () => void }) {
           <span className="text-[13px] font-medium tracking-[0.28em]">{SITE.name}</span>
         </a>
         <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-8 gap-y-3 text-[14px] text-muted">
-          <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-ink">{SITE.email}</a>
           <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-ink">LinkedIn</a>
           <button type="button" onClick={onPrivacy} className="transition-colors hover:text-ink">{FOOTER.privacy}</button>
         </nav>

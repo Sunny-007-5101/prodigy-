@@ -30,8 +30,8 @@ npm run build      # בדיקת טיפוסים + build ל-dist/
 1. להעלות ל-GitHub ולחבר ב-Vercel (Framework: Vite – מזוהה אוטומטית).
 2. Environment Variables (ראו `.env.example`):
    - `RESEND_API_KEY` – מ-resend.com (לאמת את הדומיין שם כדי לשלוח מהכתובת שלו)
-   - `CONTACT_TO` – המייל שאליו מגיעות הפניות
-   - `CONTACT_FROM` – לדוגמה `Prodigy Website <website@domain.com>`
+   - הנמענים: כל פנייה נשלחת לחמשת המיילים שברשימה `RECIPIENTS` ב-`api/contact.ts`. אפשר לדרוס עם `CONTACT_TO` (מופרד בפסיקים)
+   - `CONTACT_FROM` – ברירת מחדל `Prodigy Website <website@prodigy-technology.com>` (הדומיין prodigy-technology.com חייב להיות מאומת ב-Resend)
    - אופציונלי: `TURNSTILE_SECRET_KEY` + `VITE_TURNSTILE_SITE_KEY` (Cloudflare Turnstile, מצב Invisible)
 3. לחבר דומיין.
 

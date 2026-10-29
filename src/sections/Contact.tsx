@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../components/Button';
-import { CONTACT, SITE } from '../content';
+import { CONTACT } from '../content';
 import { LineReveal } from '../motion/LineReveal';
 import { Reveal, RevealGroup, RevealItem } from '../motion/Reveal';
 import { EASE } from '../motion/variants';
@@ -85,12 +85,7 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
           <Reveal as="p" delay={0.1} className="mt-8 max-w-sm text-[17px] leading-relaxed text-muted">
             {CONTACT.intro}
           </Reveal>
-          <Reveal delay={0.2} className="mt-10">
-            <a href={`mailto:${SITE.email}`} className="font-mono text-[13px] tracking-[0.04em] text-ink/80 underline decoration-line-strong underline-offset-[6px] transition-colors hover:text-ink hover:decoration-accent">
-              {SITE.email}
-            </a>
-          </Reveal>
-          <Reveal delay={0.25} className="mt-6 flex flex-col gap-3">
+          <Reveal delay={0.2} className="mt-10 flex flex-col gap-3">
             {CONTACT.emails.map((e) => (
               <a
                 key={e}
@@ -177,11 +172,7 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
 
                 {status === 'error' && (
                   <p role="alert" className="mt-6 text-[14px] text-muted">
-                    {CONTACT.error}{' '}
-                    <a className="text-ink underline underline-offset-4" href={`mailto:${SITE.email}`}>
-                      {SITE.email}
-                    </a>
-                    .
+                    {CONTACT.error}
                   </p>
                 )}
               </motion.form>

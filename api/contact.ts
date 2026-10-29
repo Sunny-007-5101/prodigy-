@@ -1,6 +1,16 @@
 // Vercel Serverless Function: POST /api/contact
 // Validates, filters spam, and emails the submission to the company inbox via Resend.
-// Env: RESEND_API_KEY, CONTACT_TO, CONTACT_FROM, TURNSTILE_SECRET_KEY (optional)
+// Env: RESEND_API_KEY, CONTACT_FROM, TURNSTILE_SECRET_KEY (optional),
+//      CONTACT_TO (optional, comma-separated — overrides the list below)
+
+/** Every submission is emailed to all of these addresses. */
+export const RECIPIENTS = [
+  'aviad.zadok@prodigy-technology.com',
+  'jonathan.barkat@prodigy-technology.com',
+  'ran.nussbaum@prodigy-technology.com',
+  'ron.itzchaki@prodigy-technology.com',
+  'shaked.shek@prodigy-technology.com',
+];
 
 type Body = {
   name?: string;
@@ -54,9 +64,11 @@ export default async function handler(req: any, res: any) {
   if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ ok: false });
 
   const key = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO;
-  const from = process.env.CONTACT_FROM || 'Prodigy Website <onboarding@resend.dev>';
-  if (!key || !to) return res.status(500).json({ ok: false, error: 'Email is not configured' });
+  const to = process.env.CONTACT_TO
+    ? process.env.CONTACT_TO.split(',').map((s) => s.trim()).filter(Boolean)
+    : RECIPIENTS;
+  const from = process.env.CONTACT_FROM || 'Prodigy Website <website@prodigy-technology.com>';
+  if (!key) return res.status(500).json({ ok: false, error: 'Email is not configured' });
 
   const html = `
     <div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#111">
@@ -70,7 +82,7 @@ export default async function handler(req: any, res: any) {
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from,
-      to: [to],
+      to,
       reply_to: email,
       subject: `New inquiry from ${name}${organization ? ` (${organization})` : ''}`,
       html,

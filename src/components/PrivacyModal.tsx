@@ -79,13 +79,7 @@ export function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => 
               <h3>Cookies and tracking</h3>
               <p>This website does not use tracking or advertising cookies.</p>
               <h3>Your rights</h3>
-              <p>
-                You may ask us to access, correct or delete your information at any time by writing to{' '}
-                <a className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-accent" href={`mailto:${SITE.email}`}>
-                  {SITE.email}
-                </a>
-                .
-              </p>
+              <p>You may ask us to access, correct or delete your information at any time by writing to us.</p>
             </div>
           </motion.div>
         </motion.div>

@@ -72,7 +72,7 @@ export const CONTACT = {
   send: 'Send',
   sending: 'Sending',
   success: 'Thank you. We will be in touch.',
-  error: 'Something went wrong. Please email us directly at',
+  error: 'Something went wrong. Please try again.',
 };
 
 export const FOOTER = {
