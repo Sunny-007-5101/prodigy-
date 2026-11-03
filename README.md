@@ -23,15 +23,15 @@ npm run build      # בדיקת טיפוסים + build ל-dist/
 | אנימציות גלילה | `src/motion/*` (Reveal, LineReveal, WordReveal) |
 | לוגו (placeholder) | `src/components/Logo.tsx` + `public/favicon.svg` |
 | מדיניות פרטיות (טיוטה) | `src/components/PrivacyModal.tsx` |
-| נמעני הטופס | `src/content.ts` → `CONTACT.form` |
+| שליחת הטופס ונמענים | `api/contact.ts` → `RECIPIENTS` |
 
 ## עלייה לאוויר (Vercel)
 
 1. להעלות ל-GitHub ולחבר ב-Vercel (Framework: Vite – מזוהה אוטומטית).
-2. הטופס עובד דרך FormSubmit (formsubmit.co), בלי שרת ובלי משתני סביבה:
-   - הנמענים מוגדרים ב-`src/content.ts` → `CONTACT.form` (`to` = נמען ראשי, `cc` = עותקים)
-   - בשליחה הראשונה מהאתר החי, הנמען הראשי מקבל מייל "Activate Form" מ-FormSubmit — ללחוץ עליו פעם אחת. פניות ששלחו לפני האישור יימסרו אחריו
-   - כדאי לבקש מהנמענים לסמן את submissions@formsubmit.co כ"לא ספאם"
+2. הטופס: `api/contact.ts` (פונקציית Vercel) → Resend → contact@prodigy-technology.com
+   - ב-Vercel → Settings → Environment Variables להוסיף `RESEND_API_KEY` (המפתח "Lia website" מחשבון Resend של Prodigy). לא לשמור את המפתח בקוד
+   - הדומיין prodigy-technology.com חייב להיות Verified ב-Resend (רשומות DKIM + send/rsend ב-DNS)
+   - אחרי Deploy: לשלוח טופס בדיקה ולוודא שהגיע ל-contact@
 3. לחבר דומיין.
 
 ## לפני מסירה
@@ -43,7 +43,7 @@ npm run build      # בדיקת טיפוסים + build ל-dist/
 
 ## הגנה מספאם
 
-Honeypot (גם בצד האתר וגם `_honey` של FormSubmit) · חסימת שליחה תוך פחות מ-3 שניות מטעינת הדף. אין עוגיות מעקב.
+Honeypot · חסימת שליחה תוך פחות מ-3 שניות מטעינת הדף · עד 5 פניות לשעה מאותה כתובת IP. אין עוגיות מעקב.
 
 ## נגישות וביצועים
 

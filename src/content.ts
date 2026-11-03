@@ -72,7 +72,7 @@ export const TEAM = {
       role: 'COO',
       details: ['Defense Systems & Field Operations Specialist', 'Former IAF Special Forces Officer'],
       email: 'ron.itzchaki@prodigy-technology.com',
-      linkedin: 'https://www.linkedin.com/in/ron-itzchaki-378288434',
+      linkedin: 'https://www.linkedin.com/in/ron-itzchaki/',
     },
     {
       name: 'Shaked Shek',
@@ -90,13 +90,8 @@ export const CONTACT = {
   label: 'Contact',
   title: 'Get in touch.',
   intro: 'Interested in what we are building? We would like to hear from you.',
-  emails: ['contact@prodigy-technology.com', 'ran@pontifax.com'],
+  emails: ['contact@prodigy-technology.com'],
   fields: { name: 'Name', organization: 'Organization', email: 'Email', message: 'Message' },
-  // Where form submissions are emailed (via FormSubmit). `to` gets the one-time activation email.
-  form: {
-    to: 'contact@prodigy-technology.com',
-    cc: [] as string[],
-  },
   consent: 'I agree to the',
   consentLink: 'Privacy Policy',
   send: 'Send',

@@ -8,11 +8,7 @@ import { EASE } from '../motion/variants';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
-/**
- * Submissions go through FormSubmit (formsubmit.co): no backend, no API keys.
- * The primary address receives the mail; everyone in `cc` gets a copy.
- * First submission ever triggers a one-time "Activate Form" email to the primary address.
- */
+/** Submissions go to /api/contact (Vercel function → Resend → contact@prodigy-technology.com). */
 export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
   const [status, setStatus] = useState<Status>('idle');
   const [consent, setConsent] = useState(false);
@@ -21,32 +17,21 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    // spam guards: honeypot filled, or sent within 3s of load → pretend success
-    if (fd.get('website') || Date.now() - loadedAt.current < 3000) {
-      setStatus('success');
-      return;
-    }
     setStatus('sending');
-    const name = String(fd.get('name') || '');
-    const organization = String(fd.get('organization') || '');
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT.form.to}`, {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          Name: name,
-          Organization: organization || '—',
-          email: fd.get('email'), // FormSubmit uses this as Reply-To
-          Message: fd.get('message'),
-          _subject: `New inquiry from ${name}${organization ? ` (${organization})` : ''} — Prodigy website`,
-          ...(CONTACT.form.cc.length ? { _cc: CONTACT.form.cc.join(',') } : {}),
-          _template: 'table',
-          _captcha: 'false',
-          _honey: '',
+          name: fd.get('name'),
+          organization: fd.get('organization'),
+          email: fd.get('email'),
+          message: fd.get('message'),
+          website: fd.get('website'), // honeypot
+          elapsed: Date.now() - loadedAt.current,
         }),
       });
-      const data = (await res.json().catch(() => ({}))) as { success?: string | boolean };
-      if (!res.ok || String(data.success) === 'false') throw new Error('send failed');
+      if (!res.ok) throw new Error(String(res.status));
       setStatus('success');
     } catch {
       setStatus('error');
