@@ -73,6 +73,10 @@ export default async function handler(req: any, res: any) {
       text: `Name: ${name}\nOrganization: ${organization || '—'}\nEmail: ${email}\n\n${message}`,
     }),
   });
-  if (!r.ok) return res.status(502).json({ ok: false });
+  if (!r.ok) {
+    // shows up in Vercel → Logs, e.g. "domain is not verified" or "invalid API key"
+    console.error('Resend error', r.status, await r.text());
+    return res.status(502).json({ ok: false });
+  }
   return res.status(200).json({ ok: true });
 }
