@@ -1,5 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '../components/Button';
 import { StatusTag } from '../components/Bits';
 import { HERO } from '../content';
@@ -21,8 +21,21 @@ function renderLine(line: string) {
   );
 }
 
+function useIsPhone() {
+  const q = '(max-width: 767px)';
+  const [phone, setPhone] = useState(() => typeof window !== 'undefined' && window.matchMedia(q).matches);
+  useEffect(() => {
+    const m = window.matchMedia(q);
+    const on = () => setPhone(m.matches);
+    m.addEventListener('change', on);
+    return () => m.removeEventListener('change', on);
+  }, []);
+  return phone;
+}
+
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const phone = useIsPhone();
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-12%']);
@@ -49,8 +62,8 @@ export function Hero() {
           as="h1"
           immediate
           delay={0.3}
-          lines={HERO.titleLines.map(renderLine)}
-          className="max-w-[15ch] text-[clamp(42px,6.4vw,96px)] font-normal leading-[1.02] tracking-[-0.022em] text-ink md:max-w-none"
+          lines={(phone ? HERO.titleLinesMobile : HERO.titleLines).map(renderLine)}
+          className="text-[clamp(42px,6.4vw,96px)] font-normal leading-[1.02] tracking-[-0.022em] text-ink md:max-w-none"
         />
 
         <motion.p {...fade(0.9)} className="mt-8 max-w-[34rem] text-[16px] leading-relaxed text-muted md:text-[18px]">

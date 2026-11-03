@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '../components/Button';
 import { CONTACT } from '../content';
 import { LineReveal } from '../motion/LineReveal';
@@ -7,69 +7,49 @@ import { Reveal, RevealGroup, RevealItem } from '../motion/Reveal';
 import { EASE } from '../motion/variants';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
-const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
-declare global {
-  interface Window {
-    turnstile?: {
-      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
-      reset: (id?: string) => void;
-    };
-  }
-}
-
+/**
+ * Submissions go through FormSubmit (formsubmit.co): no backend, no API keys.
+ * The primary address receives the mail; everyone in `cc` gets a copy.
+ * First submission ever triggers a one-time "Activate Form" email to the primary address.
+ */
 export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
   const [status, setStatus] = useState<Status>('idle');
   const [consent, setConsent] = useState(false);
   const loadedAt = useRef(Date.now());
-  const token = useRef('');
-  const widget = useRef<HTMLDivElement>(null);
-  const widgetId = useRef<string>();
-
-  // Cloudflare Turnstile (only if a site key is configured). "interaction-only"
-  // keeps it invisible for almost everyone.
-  useEffect(() => {
-    if (!SITE_KEY || !widget.current) return;
-    const render = () => {
-      if (!window.turnstile || !widget.current || widgetId.current) return;
-      widgetId.current = window.turnstile.render(widget.current, {
-        sitekey: SITE_KEY,
-        appearance: 'interaction-only',
-        theme: 'dark',
-        callback: (t: string) => (token.current = t),
-      });
-    };
-    if (window.turnstile) return render();
-    const s = document.createElement('script');
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-    s.async = true;
-    s.onload = render;
-    document.head.appendChild(s);
-  }, []);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    // spam guards: honeypot filled, or sent within 3s of load → pretend success
+    if (fd.get('website') || Date.now() - loadedAt.current < 3000) {
+      setStatus('success');
+      return;
+    }
     setStatus('sending');
+    const name = String(fd.get('name') || '');
+    const organization = String(fd.get('organization') || '');
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT.form.to}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          name: fd.get('name'),
-          organization: fd.get('organization'),
-          email: fd.get('email'),
-          message: fd.get('message'),
-          website: fd.get('website'), // honeypot
-          elapsed: Date.now() - loadedAt.current,
-          token: token.current,
+          Name: name,
+          Organization: organization || '—',
+          email: fd.get('email'), // FormSubmit uses this as Reply-To
+          Message: fd.get('message'),
+          _subject: `New inquiry from ${name}${organization ? ` (${organization})` : ''} — Prodigy website`,
+          ...(CONTACT.form.cc.length ? { _cc: CONTACT.form.cc.join(',') } : {}),
+          _template: 'table',
+          _captcha: 'false',
+          _honey: '',
         }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const data = (await res.json().catch(() => ({}))) as { success?: string | boolean };
+      if (!res.ok || String(data.success) === 'false') throw new Error('send failed');
       setStatus('success');
     } catch {
       setStatus('error');
-      if (widgetId.current) window.turnstile?.reset(widgetId.current);
     }
   };
 
@@ -168,7 +148,6 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
                     {status === 'sending' ? CONTACT.sending : CONTACT.send}
                   </Button>
                 </Reveal>
-                <div ref={widget} className="mt-4" />
 
                 {status === 'error' && (
                   <p role="alert" className="mt-6 text-[14px] text-muted">

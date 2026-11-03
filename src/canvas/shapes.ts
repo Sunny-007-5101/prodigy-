@@ -242,3 +242,69 @@ export function liveSpan(count: number, rand: () => number): CP[] {
   }
   return finalize(b, 'x');
 }
+
+/**
+ * 03 — Mapping & database: a row of towers and their span over a dotted map
+ * grid, read as a digital twin. Each tower carries a data marker (accent,
+ * lighting up in turn) and the mapping layer is swept by a scan.
+ */
+export function gridMap(count: number, rand: () => number): CP[] {
+  const b = new Builder(rand);
+  const ground = 1.25;
+  const route = (x: number) => 0.55 * Math.sin(x * 0.55);
+  const towersX = [-3, -1, 1, 3];
+
+  // map layer: an evenly dotted grid on the ground plane (reads as a map / digital twin)
+  const step = 0.11;
+  for (let gx = -3.6; gx <= 3.61; gx += 0.6)
+    for (let z = -2; z <= 2; z += step) b.add(gx, ground, z);
+  for (let gz = -2; gz <= 2.01; gz += 0.5)
+    for (let x = -3.6; x <= 3.6; x += step) b.add(x, ground, gz);
+  for (let i = 0; i < count * 0.08; i++) {
+    const x = -3.6 + rand() * 7.2;
+    const side = rand() < 0.5 ? -1 : 1;
+    b.add(x, ground, route(x) + side * (0.45 + rand() * 0.04));
+  }
+
+  // towers (small lattice) with cross-arms
+  const d = count / 140;
+  towersX.forEach((x, lane) => {
+    const z = route(x);
+    const legs: [number, number][] = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+    const top = -0.35;
+    for (const [sx, sz] of legs) b.seg([x + sx * 0.22, ground, z + sz * 0.22], [x + sx * 0.06, top, z + sz * 0.06], d * 1.6);
+    for (const yy of [0.75, 0.25]) {
+      const w = 0.06 + ((yy - top) / (ground - top)) * 0.16;
+      for (let k = 0; k < 4; k++) {
+        const [ax, az] = legs[k];
+        const [bx, bz] = legs[(k + 1) % 4];
+        b.seg([x + ax * w, yy, z + az * w], [x + bx * w, yy, z + bz * w], d * 0.8);
+      }
+    }
+    b.seg([x, -0.15, z - 0.5], [x, -0.15, z + 0.5], d * 1.4); // cross-arm
+    // data marker above the tower: dashed stem + ring (accent, takes turns)
+    const start = b.pts.length;
+    for (let i = 0; i < 14; i++) b.add(x, -0.45 - i * 0.045, z, 1);
+    for (let i = 0; i < 36; i++) {
+      const th = (i / 36) * Math.PI * 2;
+      b.add(x + Math.cos(th) * 0.14, -1.12, z + Math.sin(th) * 0.14, 1);
+    }
+    for (let i = start; i < b.pts.length; i++) b.pts[i].lane = lane;
+  });
+
+  // conductors between towers (two phases at the cross-arm ends, with sag)
+  const per = Math.floor((count * 0.3) / ((towersX.length - 1) * 2));
+  for (let t = 0; t < towersX.length - 1; t++) {
+    const x0 = towersX[t];
+    const x1 = towersX[t + 1];
+    for (const off of [-0.5, 0.5]) {
+      for (let i = 0; i < per; i++) {
+        const k = rand();
+        const x = x0 + (x1 - x0) * k;
+        const z = route(x0) + (route(x1) - route(x0)) * k + off;
+        b.add(x, -0.15 + 0.32 * 4 * k * (1 - k), z);
+      }
+    }
+  }
+  return finalize(b, 'x');
+}

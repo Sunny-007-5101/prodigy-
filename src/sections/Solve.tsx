@@ -16,7 +16,7 @@ export function Solve() {
         <LineReveal
           id="solve-title"
           lines={splitTitle(SOLVE.title)}
-          className="max-w-[22ch] text-[clamp(32px,4.4vw,64px)] font-normal leading-[1.05] tracking-[-0.02em]"
+          className="max-w-[26ch] text-[clamp(32px,4.4vw,64px)] font-normal leading-[1.05] tracking-[-0.02em]"
         />
 
         {/* Tiles: title + a live point-cloud illustration, no explanatory text */}
@@ -78,6 +78,9 @@ export function Solve() {
 
 /** Two balanced lines for the section title on wide screens. */
 function splitTitle(t: string) {
+  // break after a full sentence when there is one
+  const dot = t.indexOf('. ');
+  if (dot > 0) return [t.slice(0, dot + 1), t.slice(dot + 2)];
   const words = t.split(' ');
   const mid = Math.ceil(words.length / 2);
   return [words.slice(0, mid).join(' '), words.slice(mid).join(' ')];

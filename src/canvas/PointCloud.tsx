@@ -42,6 +42,7 @@ export function PointCloud({ config, className = '' }: { config: CloudConfig; cl
     built: false,
     axisMin: 0,
     axisMax: 1,
+    lanes: 4,
   });
   const c = config;
 
@@ -63,6 +64,7 @@ export function PointCloud({ config, className = '' }: { config: CloudConfig; cl
       const ax = c.scan === 'x' ? 'x' : 'y';
       st.axisMin = Math.min(...st.pts.map((p) => p[ax]));
       st.axisMax = Math.max(...st.pts.map((p) => p[ax]));
+      st.lanes = Math.max(1, ...st.pts.filter((p) => p.kind === 1).map((p) => p.lane + 1));
 
       // Fit: sample the rotation range and take the largest projected bounds.
       const roll = c.roll ?? 0;
@@ -121,7 +123,7 @@ export function PointCloud({ config, className = '' }: { config: CloudConfig; cl
       const band = span * 0.035;
       const ax = c.scan === 'x' ? 'x' : 'y';
       const flowT = st.clock * 0.32;
-      const active = c.cycle ? Math.floor(st.clock / c.cycle) % 4 : -1;
+      const active = c.cycle ? Math.floor(st.clock / c.cycle) % st.lanes : -1;
 
       ctx.globalCompositeOperation = 'lighter';
       for (const p of st.pts) {

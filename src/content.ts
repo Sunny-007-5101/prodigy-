@@ -3,8 +3,9 @@
 
 export const SITE = {
   name: 'PRODIGY',
-  email: 'contact@[domain]', // TODO: replace with the real address once the domain is set
-  linkedin: '#', // TODO: company LinkedIn URL
+  email: 'contact@prodigy-technology.com',
+  url: 'https://www.prodigy-technology.com',
+  linkedin: '', // company LinkedIn page — add the URL when it exists (footer link shows only when set)
   year: 2026,
 };
 
@@ -18,9 +19,11 @@ export const NAV = [
 export const HERO = {
   // The word in `emphasis` is set in the italic serif.
   titleLines: ['A new age of', 'autonomy for the world’s', 'critical infrastructure.'],
+  // Phone line breaks, so no word is left alone on a line
+  titleLinesMobile: ['A new age of', 'autonomy for', 'the world’s critical', 'infrastructure.'],
   emphasis: 'autonomy',
   subtitle:
-    'Next generation robotic and drone systems that inspect and maintain the assets the world runs on.',
+    'Building the autonomy platform behind next generation robotic and drone systems for the assets the world runs on.',
   cta: 'Get in touch',
   status: 'Operating in stealth',
 };
@@ -28,17 +31,17 @@ export const HERO = {
 export const ABOUT = {
   label: 'Who we are',
   body:
-    'Much of the work on critical infrastructure is still done by crews, helicopters and heavy equipment, at height and near live assets.\nThe robots and drones in use today remain basic tools with limited autonomy.\nProdigy is building the next generation: truly autonomous robotic and drone systems that take on the hardest work, safer, faster and at global scale.',
+    'Much of the work on critical infrastructure is still done by crews, helicopters and heavy equipment, at height and near live assets.\nThe robots and drones in use today remain basic tools with limited autonomy.\nProdigy is a technology hub building the next generation: an autonomy platform, proprietary robotic and drone systems and the data layer behind them, so the hardest work gets done safer, faster and at global scale.',
   // This phrase gets the accent colour once the reveal finishes.
-  highlight: 'Prodigy is building the next generation',
+  highlight: 'a technology hub building the next generation',
 };
 
 export const SOLVE = {
   label: 'What we solve',
-  title: 'The hardest work on the infrastructure the world depends on.',
-  tiles: ['Autonomous inspection', 'Autonomous maintenance', 'Operations at height', 'On live assets'],
+  title: 'One technology core. Multiple applications for the infrastructure the world depends on.',
+  tiles: ['Autonomous inspection', 'Autonomous maintenance', 'Mapping & database', 'On live assets'],
   focus: {
-    label: 'In focus',
+    label: 'First application',
     title: 'Insulator contamination',
     body:
       'Salt, dust and industrial pollution build up on high voltage insulators. In fog, dew or light rain the layer becomes conductive and can trigger flashover, tripping lines and causing outages. Utilities worldwide manage it with recurring manual work that is costly, slow and hazardous.',
@@ -50,8 +53,34 @@ export const TEAM = {
   label: 'Team',
   title: 'The team',
   people: [
-    { name: 'Jonathan Barkat', role: 'Co-founder & CEO', linkedin: 'https://www.linkedin.com/in/jonathan-barkat-1a4983296' },
-    { name: 'Ran Nussbaum', role: 'Co-founder & Chairman · Managing Partner & Co-founder, Pontifax', linkedin: '' },
+    {
+      name: 'Jonathan Barkat',
+      role: 'Co-founder & CEO',
+      details: [] as string[],
+      email: 'jonathan.barkat@prodigy-technology.com',
+      linkedin: 'https://www.linkedin.com/in/jonathan-barkat-1a4983296',
+    },
+    {
+      name: 'Ran Nussbaum',
+      role: 'Co-founder & Chairman · Managing Partner & Co-founder, Pontifax',
+      details: [],
+      email: 'ran@pontifax.com',
+      linkedin: 'https://www.linkedin.com/in/ran-nussbaum-b402566',
+    },
+    {
+      name: 'Ron Itzchaki',
+      role: 'COO',
+      details: ['Defense Systems & Field Operations Specialist', 'Former IAF Special Forces Officer'],
+      email: 'ron.itzchaki@prodigy-technology.com',
+      linkedin: 'https://www.linkedin.com/in/ron-itzchaki-378288434',
+    },
+    {
+      name: 'Shaked Shek',
+      role: 'CTO',
+      details: ['Strategic Technology Leadership, Robotics & Autonomy', 'Driving Autonomous Innovation from Concept to Scale'],
+      email: 'shaked.shek@prodigy-technology.com',
+      linkedin: 'https://www.linkedin.com/in/shaked-shek-ab752983',
+    },
   ],
   note:
     'Our leadership team and engineers come from Israel’s top robotics and drone startups and elite IDF technology units.',
@@ -61,12 +90,13 @@ export const CONTACT = {
   label: 'Contact',
   title: 'Get in touch.',
   intro: 'Interested in what we are building? We would like to hear from you.',
-  emails: [
-    'jonathan.barkat@prodigy-technology.com',
-    'ran.nussbaum@prodigy-technology.com',
-    'ron.itzchaki@prodigy-technology.com',
-  ],
+  emails: ['contact@prodigy-technology.com', 'ran@pontifax.com'],
   fields: { name: 'Name', organization: 'Organization', email: 'Email', message: 'Message' },
+  // Where form submissions are emailed (via FormSubmit). `to` gets the one-time activation email.
+  form: {
+    to: 'contact@prodigy-technology.com',
+    cc: [] as string[],
+  },
   consent: 'I agree to the',
   consentLink: 'Privacy Policy',
   send: 'Send',
