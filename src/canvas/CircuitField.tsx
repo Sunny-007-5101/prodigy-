@@ -49,8 +49,8 @@ export function CircuitField({ className = '' }: { className?: string }) {
     s.pulses.push({
       trace,
       d: 0,
-      speed: (s.mobile ? 90 : 120) + s.rand() * 140,
-      tail: 70 + s.rand() * 70,
+      speed: (s.mobile ? 100 : 130) + s.rand() * 150,
+      tail: 100 + s.rand() * 90,
     });
   };
 
@@ -62,7 +62,7 @@ export function CircuitField({ className = '' }: { className?: string }) {
       s.rand = rng(7);
       const cell = mobile ? 30 : 26;
       s.traces = buildTraces(w, h, cell, s.rand, mobile ? 0.55 : 1);
-      s.maxPulses = mobile ? 6 : 16;
+      s.maxPulses = mobile ? 10 : 28;
       s.pulses = [];
       s.flashes = [];
 
@@ -76,7 +76,7 @@ export function CircuitField({ className = '' }: { className?: string }) {
       c.translate(20, 20);
 
       // faint dot matrix
-      c.fillStyle = 'rgba(125,139,163,0.10)';
+      c.fillStyle = 'rgba(125,139,163,0.16)';
       for (let x = (w % cell) / 2; x < w; x += cell)
         for (let y = (h % cell) / 2; y < h; y += cell) c.fillRect(x - 0.5, y - 0.5, 1, 1);
 
@@ -84,13 +84,13 @@ export function CircuitField({ className = '' }: { className?: string }) {
         c.beginPath();
         c.moveTo(t.pts[0].x, t.pts[0].y);
         for (let i = 1; i < t.pts.length; i++) c.lineTo(t.pts[i].x, t.pts[i].y);
-        c.lineWidth = 1;
+        c.lineWidth = 1.3;
         if (t.solid) {
           c.setLineDash([]);
-          c.strokeStyle = 'rgba(52,75,110,0.6)';
+          c.strokeStyle = 'rgba(64,94,138,0.8)';
         } else {
           c.setLineDash([2, 5]);
-          c.strokeStyle = 'rgba(62,90,132,0.9)';
+          c.strokeStyle = 'rgba(80,115,165,1)';
         }
         c.stroke();
         c.setLineDash([]);
@@ -99,10 +99,10 @@ export function CircuitField({ className = '' }: { className?: string }) {
         if (t.startNode) pads.push(t.pts[0]);
         for (const p of pads) {
           c.beginPath();
-          c.arc(p.x, p.y, 2.6, 0, Math.PI * 2);
+          c.arc(p.x, p.y, 3, 0, Math.PI * 2);
           c.fillStyle = '#0a1526';
           c.fill();
-          c.strokeStyle = 'rgba(70,100,145,0.95)';
+          c.strokeStyle = 'rgba(95,135,185,1)';
           c.stroke();
         }
       }
@@ -136,7 +136,7 @@ export function CircuitField({ className = '' }: { className?: string }) {
       // spawn pulses, staggered
       if (!reduce && t > s.spawnAt && s.pulses.length < s.maxPulses) {
         spawn(s);
-        s.spawnAt = t + 0.15 + s.rand() * 0.5;
+        s.spawnAt = t + 0.06 + s.rand() * 0.25;
       }
 
       ctx.globalCompositeOperation = 'lighter';
@@ -157,19 +157,19 @@ export function CircuitField({ className = '' }: { className?: string }) {
           ctx.beginPath();
           ctx.moveTo(pts[0].x, pts[0].y);
           for (let j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
-          ctx.strokeStyle = f > 0.6 ? `rgba(${ACCENT},${f * 0.95})` : `rgba(${DEEP},${f * 0.9})`;
-          ctx.lineWidth = 1.1 + f * 0.7;
+          ctx.strokeStyle = f > 0.5 ? `rgba(${ACCENT},${Math.min(1, f * 1.1)})` : `rgba(${DEEP},${f * 1.6})`;
+          ctx.lineWidth = 1.4 + f * 1.1;
           ctx.stroke();
         }
         if (p.d < p.trace.len) {
           const hp = pointAt(p.trace, head);
-          const g = ctx.createRadialGradient(hp.x, hp.y, 0, hp.x, hp.y, 12);
-          g.addColorStop(0, `rgba(${ACCENT},0.55)`);
+          const g = ctx.createRadialGradient(hp.x, hp.y, 0, hp.x, hp.y, 18);
+          g.addColorStop(0, `rgba(${ACCENT},0.8)`);
           g.addColorStop(1, `rgba(${ACCENT},0)`);
           ctx.fillStyle = g;
-          ctx.fillRect(hp.x - 12, hp.y - 12, 24, 24);
-          ctx.fillStyle = 'rgba(220,250,255,0.95)';
-          ctx.fillRect(hp.x - 1, hp.y - 1, 2, 2);
+          ctx.fillRect(hp.x - 18, hp.y - 18, 36, 36);
+          ctx.fillStyle = 'rgba(230,252,255,1)';
+          ctx.fillRect(hp.x - 1.5, hp.y - 1.5, 3, 3);
         }
         if (!reduce && p.d - p.tail > p.trace.len) {
           if (p.trace.endNode) {
@@ -184,12 +184,12 @@ export function CircuitField({ className = '' }: { className?: string }) {
       for (let i = s.flashes.length - 1; i >= 0; i--) {
         const f = s.flashes[i];
         f.age += dt;
-        const k = f.age / 0.9;
+        const k = f.age / 1.1;
         if (k >= 1) { s.flashes.splice(i, 1); continue; }
         ctx.beginPath();
-        ctx.arc(f.x, f.y, 3 + k * 10, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(${ACCENT},${(1 - k) * 0.7})`;
-        ctx.lineWidth = 1;
+        ctx.arc(f.x, f.y, 3 + k * 16, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${ACCENT},${(1 - k) * 0.9})`;
+        ctx.lineWidth = 1.4;
         ctx.stroke();
         ctx.beginPath();
         ctx.arc(f.x, f.y, 2.4, 0, Math.PI * 2);

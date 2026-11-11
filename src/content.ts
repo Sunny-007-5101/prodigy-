@@ -10,20 +10,19 @@ export const SITE = {
 };
 
 export const NAV = [
-  { id: 'about', label: 'About' },
   { id: 'solve', label: 'What we solve' },
+  { id: 'about', label: 'About' },
   { id: 'team', label: 'Team' },
   { id: 'contact', label: 'Contact' },
 ] as const;
 
 export const HERO = {
   // The word in `emphasis` is set in the italic serif.
-  titleLines: ['A new age of', 'autonomy for the world’s', 'critical infrastructure.'],
+  titleLines: ['Autonomous', 'technology', 'for critical', 'infrastructure.'],
   // Phone line breaks, so no word is left alone on a line
-  titleLinesMobile: ['A new age of', 'autonomy for', 'the world’s critical', 'infrastructure.'],
-  emphasis: 'autonomy',
-  subtitle:
-    'Building the autonomy platform behind next generation robotic and drone systems for the assets the world runs on.',
+  titleLinesMobile: ['Autonomous', 'technology', 'for critical', 'infrastructure.'],
+  emphasis: 'Autonomous',
+  subtitle: 'Robotic and drone systems that inspect and maintain the assets the world runs on.',
   cta: 'Get in touch',
   status: 'Operating in stealth',
 };

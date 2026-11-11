@@ -1,8 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { INSULATOR, TILE_CLOUDS } from '../canvas/clouds';
 import { PointCloud } from '../canvas/PointCloud';
-import { Ticks } from '../components/Bits';
-import { SOLVE } from '../content';
+import { StatusTag, Ticks } from '../components/Bits';
+import { HERO, SOLVE } from '../content';
 import { anchor } from '../lib/scroll';
 import { LineReveal } from '../motion/LineReveal';
 import { Reveal, RevealGroup, RevealItem } from '../motion/Reveal';
@@ -13,6 +13,9 @@ export function Solve() {
   return (
     <section id="solve" className="relative py-20 md:py-28" aria-labelledby="solve-title">
       <div className="wrap">
+        <Reveal className="mb-8 md:mb-10">
+          <StatusTag label={HERO.status} />
+        </Reveal>
         <LineReveal
           id="solve-title"
           lines={splitTitle(SOLVE.title)}

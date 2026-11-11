@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../components/Button';
-import { StatusTag } from '../components/Bits';
+import { DroneScene } from '../canvas/DroneScene';
 import { HERO } from '../content';
 import { anchor } from '../lib/scroll';
 import { LineReveal } from '../motion/LineReveal';
@@ -53,47 +53,45 @@ export function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 70% 60% at 22% 68%, rgba(10,21,38,0.92) 0%, rgba(10,21,38,0.6) 45%, rgba(10,21,38,0) 75%), linear-gradient(to bottom, rgba(10,21,38,0.55) 0%, rgba(10,21,38,0) 18%)',
+            'radial-gradient(ellipse 70% 60% at 22% 60%, rgba(10,21,38,0.92) 0%, rgba(10,21,38,0.6) 45%, rgba(10,21,38,0) 75%), linear-gradient(to bottom, rgba(10,21,38,0.55) 0%, rgba(10,21,38,0) 18%)',
         }}
       />
 
-      <motion.div className="wrap relative mt-auto pb-10 pt-32 md:pb-14" style={reduce ? undefined : { y: textY }}>
-        <LineReveal
-          as="h1"
-          immediate
-          delay={0.3}
-          lines={(phone ? HERO.titleLinesMobile : HERO.titleLines).map(renderLine)}
-          className="text-[clamp(42px,6.4vw,96px)] font-normal leading-[1.02] tracking-[-0.022em] text-ink md:max-w-none"
-        />
+      <div className="wrap relative grid flex-1 items-center gap-6 pb-12 pt-28 md:pb-16 md:pt-32 lg:grid-cols-12">
+        <motion.div className="relative z-10 lg:col-span-6" style={reduce ? undefined : { y: textY }}>
+          <LineReveal
+            as="h1"
+            immediate
+            delay={0.3}
+            lines={(phone ? HERO.titleLinesMobile : HERO.titleLines).map(renderLine)}
+            className="text-[clamp(42px,5.4vw,84px)] font-normal leading-[1.04] tracking-[-0.022em] text-ink"
+          />
 
-        <motion.p {...fade(0.9)} className="mt-8 max-w-[34rem] text-[16px] leading-relaxed text-muted md:text-[18px]">
-          {HERO.subtitle}
-        </motion.p>
+          <motion.p {...fade(0.9)} className="mt-7 max-w-[30rem] text-[16px] leading-relaxed text-muted md:text-[18px]">
+            {HERO.subtitle}
+          </motion.p>
 
-        <motion.div {...fade(1.0)} className="mt-10">
-          <Button href="#contact" onClick={anchor('contact')}>
-            {HERO.cta}
-          </Button>
+          <motion.div {...fade(1.0)} className="mt-9">
+            <Button href="#contact" onClick={anchor('contact')}>
+              {HERO.cta}
+            </Button>
+          </motion.div>
         </motion.div>
 
-        <div className="mt-16 flex items-end justify-between gap-6 md:mt-20">
-          <motion.a
-            {...fade(1.3)}
-            href="#about"
-            onClick={anchor('about')}
-            className="group hidden items-center gap-4 md:flex"
-            aria-label="Scroll to About"
-          >
-            <span className="relative block h-12 w-px overflow-hidden bg-line">
-              <span className="absolute inset-x-0 top-0 h-1/3 bg-accent" style={{ animation: 'drop 2.2s var(--ease) infinite' }} />
-            </span>
-            <span className="label transition-colors group-hover:text-ink">Scroll</span>
-          </motion.a>
-          <motion.div {...fade(1.2)} className="ml-auto">
-            <StatusTag label={HERO.status} />
-          </motion.div>
-        </div>
-      </motion.div>
+        {/* opening loop: drone inspects and cleans an insulator */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: EASE, delay: 0.5 }}
+          className="relative -mx-4 h-[300px] sm:h-[380px] lg:col-span-6 lg:mx-0 lg:h-[min(62vh,560px)]"
+        >
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{ background: 'radial-gradient(ellipse 60% 55% at 55% 50%, rgba(10,21,38,0.92) 0%, rgba(10,21,38,0.7) 50%, rgba(10,21,38,0) 80%)' }}
+          />
+          <DroneScene className="relative" />
+        </motion.div>
+      </div>
     </section>
   );
 }

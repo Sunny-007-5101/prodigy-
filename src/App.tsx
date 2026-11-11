@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <>
-      <a href="#about" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-surface focus:px-4 focus:py-2">
+      <a href="#solve" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
       </a>
       <BackgroundCircuit />
@@ -32,9 +32,9 @@ export default function App() {
       <ScrollRail active={active} />
       <main className="relative z-10">
         <Hero />
-        <About />
-        <CircuitDivider variant="a" />
         <Solve />
+        <CircuitDivider variant="a" />
+        <About />
         <CircuitDivider variant="b" />
         <Team />
         <CircuitDivider variant="a" />
