@@ -33,9 +33,9 @@ export function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
       <img
         src="/brand/prodigy-wordmark-light.svg"
         alt="Prodigy"
-        width={139}
-        height={28}
-        className="h-6 w-auto -translate-y-[6px] md:h-7 md:-translate-y-[7px]"
+        width={179}
+        height={36}
+        className="h-8 w-auto -translate-y-[8px] md:h-9 md:-translate-y-[9px]"
       />
     </a>
   );

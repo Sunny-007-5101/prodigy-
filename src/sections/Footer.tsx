@@ -11,7 +11,7 @@ export function Footer({ onPrivacy }: { onPrivacy: () => void }) {
       </svg>
       <div className="wrap flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between md:py-14">
         <a href="#top" onClick={anchor('top')} className="flex items-center" aria-label="Back to top">
-          <img src="/brand/prodigy-wordmark-light.svg" alt="Prodigy" width={119} height={24} className="h-6 w-auto" />
+          <img src="/brand/prodigy-wordmark-light.svg" alt="Prodigy" width={159} height={32} className="h-8 w-auto" />
         </a>
         <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-8 gap-y-3 text-[14px] text-muted">
           {SITE.linkedin && (

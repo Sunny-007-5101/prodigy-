@@ -61,6 +61,15 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
               </a>
             ))}
           </Reveal>
+          <Reveal delay={0.3} className="mt-12">
+            <img
+              src="/brand/prodigy-logo-frame-light.svg"
+              alt="Prodigy"
+              width={340}
+              height={84}
+              className="h-auto w-[260px] sm:w-[340px]"
+            />
+          </Reveal>
         </div>
 
         <div className="rounded-xl border border-line-strong bg-[#0d1a2e]/95 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm sm:p-8 md:p-10 lg:col-span-7 lg:col-start-6">
