@@ -30,7 +30,13 @@ export function LogoMark({ size = 28, animated = true }: { size?: number; animat
 export function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <a href="#top" onClick={onClick} className="group flex items-center" aria-label="Prodigy — back to top">
-      <span className="text-[15px] font-medium tracking-[0.28em] text-ink">PRODIGY</span>
+      <img
+        src="/brand/prodigy-wordmark-light.svg"
+        alt="Prodigy"
+        width={139}
+        height={28}
+        className="h-6 w-auto -translate-y-[6px] md:h-7 md:-translate-y-[7px]"
+      />
     </a>
   );
 }

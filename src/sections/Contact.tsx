@@ -63,7 +63,7 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
           </Reveal>
         </div>
 
-        <div className="lg:col-span-6 lg:col-start-7">
+        <div className="rounded-xl border border-line-strong bg-[#0d1a2e]/95 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm sm:p-8 md:p-10 lg:col-span-7 lg:col-start-6">
           <AnimatePresence mode="wait">
             {status === 'success' ? (
               <motion.div
@@ -71,7 +71,7 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: EASE }}
-                className="flex min-h-[420px] flex-col items-start justify-center gap-6 border-t border-line pt-10"
+                className="flex min-h-[420px] flex-col items-start justify-center gap-6"
                 role="status"
               >
                 <span className="relative flex h-3 w-3">
@@ -82,7 +82,7 @@ export function Contact({ onPrivacy }: { onPrivacy: () => void }) {
               </motion.div>
             ) : (
               <motion.form key="form" exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.4 }} onSubmit={submit} noValidate={false}>
-                <RevealGroup className="grid gap-x-8 gap-y-2 sm:grid-cols-2" step={0.07}>
+                <RevealGroup className="grid gap-x-5 gap-y-5 sm:grid-cols-2" step={0.07}>
                   <RevealItem>
                     <Field name="name" label={CONTACT.fields.name} autoComplete="name" required />
                   </RevealItem>
@@ -165,20 +165,18 @@ function Field({
 }) {
   const id = `f-${name}`;
   const base =
-    'peer block w-full resize-none border-0 border-b border-line bg-transparent px-0 pb-3 pt-2 text-[17px] text-ink placeholder-transparent outline-none transition-colors focus:border-line-strong';
+    'block w-full resize-none rounded-md border border-line-strong bg-[rgba(8,17,31,0.85)] px-4 py-3 text-[16px] text-ink outline-none transition-colors hover:border-[#41608c] focus:border-accent focus:bg-[#08111f]';
   return (
-    <div className="relative pt-6">
-      <label htmlFor={id} className="label block">
+    <div>
+      <label htmlFor={id} className="mb-2 block text-[13px] font-medium text-muted">
         {label}
         {required && <span className="ml-1 text-accent">*</span>}
       </label>
       {textarea ? (
-        <textarea id={id} name={name} rows={4} required={required} maxLength={2000} className={base} />
+        <textarea id={id} name={name} rows={5} required={required} maxLength={2000} className={base} />
       ) : (
         <input id={id} name={name} type={type} required={required} autoComplete={autoComplete} maxLength={200} className={base} />
       )}
-      {/* focus line draws left → right */}
-      <span className="pointer-events-none absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-[var(--ease)] peer-focus:scale-x-100" />
     </div>
   );
 }

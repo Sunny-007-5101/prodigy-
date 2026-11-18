@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../components/Button';
-import { DroneScene } from '../canvas/DroneScene';
+import { HeroMorph } from '../canvas/HeroMorph';
 import { HERO } from '../content';
 import { anchor } from '../lib/scroll';
 import { LineReveal } from '../motion/LineReveal';
@@ -78,7 +78,7 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* opening loop: drone inspects and cleans an insulator */}
+        {/* opening loop: the cloud re-forms into the grid's components */}
         <motion.div
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -89,7 +89,7 @@ export function Hero() {
             className="pointer-events-none absolute inset-0"
             style={{ background: 'radial-gradient(ellipse 60% 55% at 55% 50%, rgba(10,21,38,0.92) 0%, rgba(10,21,38,0.7) 50%, rgba(10,21,38,0) 80%)' }}
           />
-          <DroneScene className="relative" />
+          <HeroMorph className="relative" />
         </motion.div>
       </div>
     </section>
