@@ -9,12 +9,12 @@ import { CircuitField } from '../canvas/CircuitField';
 export function BackgroundCircuit() {
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 700], [1, 0.8]);
+  const opacity = useTransform(scrollY, [0, 700], [1, 0.5]);
   return (
     <motion.div
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-0"
-      style={reduce ? { opacity: 0.8 } : { opacity }}
+      style={reduce ? { opacity: 0.5 } : { opacity }}
     >
       <CircuitField />
     </motion.div>
